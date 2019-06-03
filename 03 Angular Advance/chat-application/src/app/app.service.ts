@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators'
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
-// Imporing Cookie Module for storing temporary data in browser.
+// Imporing Cookie Module for storing temporary data in browser like user session details.
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 
 
@@ -41,7 +41,7 @@ export class AppService {
   }// end of signinFunction function.
 
 
-  // This is to get User Info after the user logged in the system. Mainly for authentication purpose.
+  // This is to get User Info after the user logged in the system. Mainly for authorisation purpose.
   // Content restriction.
   public getUserInfoFromLocalstorage = () => {
     return JSON.parse(localStorage.getItem('userInfo'));

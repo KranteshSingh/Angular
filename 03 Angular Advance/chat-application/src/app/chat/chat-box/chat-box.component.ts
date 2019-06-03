@@ -31,6 +31,8 @@ export class ChatBoxComponent implements OnInit {
 
     this.receiverId = Cookie.get('receiverId');
     this.receiverName = Cookie.get('receiverName');
+      // getting user information from cookies
+  
 
   }
 
@@ -60,13 +62,13 @@ export class ChatBoxComponent implements OnInit {
 
   // in this method we're calling the socketservice 
   public verifyUserConfirmation: any = () => {
-    //calling the verifyUser method in socketservice
+    // calling the verifyUser method in socketservice
     // in this component we're waiting for the event to happen
     this.SocketService.verifyUser()
       .subscribe((data) => {
 
         this.disconnectedSocket = false;
-
+        // socket is not disconnected anymore
         this.SocketService.setUser(this.authToken);
         this.getOnlineUserList()
 

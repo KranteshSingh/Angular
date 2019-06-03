@@ -21,10 +21,11 @@ export class SocketService {
     this.socket = io(this.url);
    }
 
-   // Events to be Listened
-// since this is the event which we have to listen to, we have to use observables here
-// in event based programming they expect something to happen & when that happen there is some data i.e., expected
-// & method is called.
+    // Events to be Listened
+    // since this is the event which we have to listen to, we have to use observables here
+    // in event based programming they expect something to happen & when that happen there is some data
+    // then method is called. it will happen asynchronously.
+    
   public verifyUser = () => {
 
     return Observable.create((observer) => {
