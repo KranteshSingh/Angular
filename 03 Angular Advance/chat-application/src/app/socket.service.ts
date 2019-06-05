@@ -78,62 +78,59 @@ export class SocketService {
   // events to be emitted
 //component will call this method & it will pass the authorisation token of the user
 // & this event will be emitted with the authtoken
+
   public setUser = (authToken) => {
 
     this.socket.emit("set-user", authToken);
 
   } // end setUser
 
-  // public markChatAsSeen = (userDetails) => {
+  public markChatAsSeen = (userDetails) => {
 
-  //   this.socket.emit('mark-chat-as-seen', userDetails);
+    this.socket.emit('mark-chat-as-seen', userDetails);
 
-  // } // end markChatAsSeen
+  } // end markChatAsSeen
 
+  // end events to be emitted
 
+  // chat related methods 
 
-  // // end events to be emitted
+  public getChat(senderId, receiverId, skip): Observable<any> {
 
-  // // chat related methods 
+    return this.http.get(`${this.url}/api/v1/chat/get/for/user?senderId=${senderId}&receiverId=${receiverId}&skip=${skip}&authToken=${Cookie.get('authtoken')}`)
+      //.do(data => console.log('Data Received'))
+      //.catch(this.handleError);
 
+  } // end logout function
 
+  public chatByUserId = (userId) => {
 
-  // public getChat(senderId, receiverId, skip): Observable<any> {
+    return Observable.create((observer) => {
 
-  //   return this.http.get(`${this.url}/api/v1/chat/get/for/user?senderId=${senderId}&receiverId=${receiverId}&skip=${skip}&authToken=${Cookie.get('authtoken')}`)
-  //     //.do(data => console.log('Data Received'))
-  //     //.catch(this.handleError);
+      this.socket.on(userId, (data) => {
 
-  // } // end logout function
+        observer.next(data);
 
-  // public chatByUserId = (userId) => {
+      }); // end Socket
 
-  //   return Observable.create((observer) => {
+    }); // end Observable
 
-  //     this.socket.on(userId, (data) => {
+  } // end chatByUserId
 
-  //       observer.next(data);
+  public SendChatMessage = (chatMsgObject) => {
 
-  //     }); // end Socket
+    this.socket.emit('chat-msg', chatMsgObject);
 
-  //   }); // end Observable
-
-  // } // end chatByUserId
-
-  // public SendChatMessage = (chatMsgObject) => {
-
-  //   this.socket.emit('chat-msg', chatMsgObject);
-
-  // } // end getChatMessage
+  } // end getChatMessage
 
 
-  // public exitSocket = () => {
+  public exitSocket = () => {
 
 
-  //   this.socket.disconnect();
+    this.socket.disconnect();
 
 
-  // }// end exit socket
+  }// end exit socket
 
   // Global error handler.
 

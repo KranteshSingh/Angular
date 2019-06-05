@@ -91,7 +91,7 @@ export class ChatBoxComponent implements OnInit {
         }
 
         console.log(this.userList);
-
+  
       }); // end online-user-list
 
   }
