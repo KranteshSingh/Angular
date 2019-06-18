@@ -126,9 +126,7 @@ export class SocketService {
 
   public exitSocket = () => {
 
-
     this.socket.disconnect();
-
 
   }// end exit socket
 
