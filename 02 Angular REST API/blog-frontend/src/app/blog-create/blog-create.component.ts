@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { BlogHttpService } from "../blog-http.service";
-
-import { ActivatedRoute, Router } from "@angular/router";
+// Importing BlogHttpService so that we can use functions defined there
+import { BlogHttpService } from '../blog-http.service';
+// Importing ActivatedRoute, Router so that we can access the current BlogId
+import { ActivatedRoute, Router } from '@angular/router';
+// Importing ToastrService so that we can display beautiful alert messages
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -10,21 +12,26 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./blog-create.component.css']
 })
 export class BlogCreateComponent implements OnInit {
+  constructor(
+    private blogHttpService: BlogHttpService,
+    private _route: ActivatedRoute,
+    private router: Router,
+    private toastr: ToastrService
+  ) {}
 
-  constructor(private blogHttpService: BlogHttpService, private _route: ActivatedRoute, private router: Router, private toastr: ToastrService) { }
-
-  test() {
-    this.toastr.success("I'm a toast!", "Success!");
-  }
-  
   public blogTitle: string;
   public blogBodyHtml: string;
   public blogDescription: string;
   public blogCategory: string;
-  public possibleCategories = ["Comedy", "Drama", "Action", "Technology", "History"]
+  public possibleCategories = [
+    'Comedy',
+    'Drama',
+    'Action',
+    'Technology',
+    'History'
+  ];
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   public createBlog(): any {
     let blogData = {
@@ -32,26 +39,23 @@ export class BlogCreateComponent implements OnInit {
       description: this.blogDescription,
       blogBody: this.blogBodyHtml,
       category: this.blogCategory
-    }// end blog data
+    };
 
     console.log(blogData);
     this.blogHttpService.createBlog(blogData).subscribe(
-
       data => {
-        console.log("Blog Created")
+        console.log('Blog Created');
         console.log(data);
-        //alert('Blog Posted Successfully');
         this.toastr.success('Blog Posted Successfully', 'Success');
         setTimeout(() => {
           this.router.navigate(['/blog', data.data.blogId]);
-        }, 1000)
+        }, 1000);
       },
       error => {
-        console.log("some error occured");
+        console.log('some error occured');
         console.log(error.errorMessage);
-        //alert('some error occured')
-        this.toastr.error('Some error occured','Error');
+        this.toastr.error('Some error occured', 'Error');
       }
-    )
+    );
   }
 }
